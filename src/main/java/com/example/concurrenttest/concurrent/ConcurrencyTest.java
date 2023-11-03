@@ -1,13 +1,19 @@
 package com.example.concurrenttest.concurrent;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+@Slf4j
 public class ConcurrencyTest {
+    //请求线程总数
     public static int clientTotal = 5000;
+    //同时并发执行的线程数
     public static int threadTotal = 200;
+    //累加和
     public static int count=0;
     public static void main(String[] args) throws Exception{
         ExecutorService executorService= Executors.newCachedThreadPool();
@@ -20,9 +26,15 @@ public class ConcurrencyTest {
                     add();
                     semaphore.release();
                 }catch (Exception e){
-                    log
+                    log.error("exception:{}",e);
                 }
+                countDownLatch.countDown();
             });
         }
+        countDownLatch.await();
+        log.info("count:{}",count);
+    }
+    public static void add(){
+        count++;
     }
 }
