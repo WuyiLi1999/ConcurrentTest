@@ -5,7 +5,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-@Sl
 public class ConcurrencyTest {
     public static int clientTotal = 5000;
     public static int threadTotal = 200;
